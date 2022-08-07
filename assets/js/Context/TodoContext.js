@@ -10,56 +10,57 @@ export default class TodoContextProvider extends Component {
       todos: [],
     };
 
-    this.readTodo()
+    this.readTodo();
   }
 
   // create
   createTodo(e, todo) {
     e.preventDefault();
-    console.log(todo)
-    let newTodos = [...this.state.todos];
-    newTodos.push(todo);
-    this.setState({
-        todos:newTodos,
-    })
+    axios
+      .post("/api/todo/create", todo)
+      .then(() => {
+        this.readTodo();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // read
   readTodo() {
-    axios.get('/api/todo/read')
-      .then(response => {
+    axios
+      .get("/api/todo/read")
+      .then((response) => {
         this.setState({
-          todos:response.data
-        })
-      }).catch(error => {
-        console.error(error);
+          todos: response.data,
+        });
       })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // update
   updateTodo(data) {
-    let todos = [...this.state.todos];
-    let todo = todos.find(todo => {
-       return todo.id === data.id 
-    })
-    todo.name = data.name
-
-    this.setState({
-        todos: todos,
-    })
+    axios
+      .post("/api/todo/update/" + data.id, data)
+      .then(() => {
+        this.readTodo();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   // delete
   deleteTodo(todoToDelete) {
-    let todos = [...this.state.todos];
-    let todo = todos.find(todo =>{
-        return todo.id === todoToDelete.id
-    })
-
-    todos.splice(todos.indexOf(todo), '1')
-
-    this.setState({
-        todos:todos,
-    })
+    axios
+      .post("/api/todo/delete/" + todoToDelete.id, todoToDelete)
+      .then(() => {
+        this.readTodo();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
