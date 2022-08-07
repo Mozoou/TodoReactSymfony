@@ -9,7 +9,8 @@ export default class TodoContextProvider extends Component {
       todos: [
         { 
             id:1,
-            name: "do something" },
+            name: "do something" 
+        },
         { 
             id:2,
             name: "do something" 
