@@ -16,6 +16,9 @@ class Todo
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column]
+    private ?bool $isDone = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -33,11 +36,25 @@ class Todo
         return $this;
     }
 
+    
+    public function isDone(): ?bool
+    {
+        return $this->isDone;
+    }
+    
+    public function setIsDone(bool $isDone): self
+    {
+        $this->isDone = $isDone;
+        
+        return $this;
+    }
+
     public function toArray()
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName()
+            'name' => $this->getName(),
+            'isDone' => $this->isDone()
         ]; 
     }
 }

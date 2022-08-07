@@ -1,4 +1,6 @@
 import {
+  Button,
+  Checkbox,
   IconButton,
   Table,
   TableBody,
@@ -22,8 +24,8 @@ function TodoTable() {
   const [editIsShown, setEditIsShown] = useState(false);
   const [editTodo, setEditTodo] = useState("");
   const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(false);
-  const [todoToBeDeleted, SetTodoToBeDeleted] = useState(null);
-
+  const [todoToBeDeleted, setTodoToBeDeleted] = useState(null);
+  const [todoIsDone, setTodoIsDone] = useState(false);
 
   return (
     <Fragment>
@@ -111,10 +113,19 @@ function TodoTable() {
                     </IconButton>
                     <IconButton onClick={() => {
                       setDeleteConfirmationIsShown(true);
-                      SetTodoToBeDeleted(todo)
+                      setTodoToBeDeleted(todo)
                     }}>
                       <ClearIcon></ClearIcon>
                     </IconButton>
+                    <Checkbox 
+                    checked={todo.isDone}
+                    onChange={(e) => {
+                      setTodoIsDone(e.target.checked)
+                      if(todo.isDone !== e.target.checked){
+                          context.isDone(todo.id, e.target.checked)
+                      }
+                    }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

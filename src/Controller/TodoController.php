@@ -25,18 +25,27 @@ class TodoController extends AbstractController
 
         $todo = new Todo();
         $todo->setName($content->name);
+        $todo->setIsDone(false);
 
         try {
             $this->em->persist($todo);
             $this->em->flush();
-            return $this->json([
-                'todo' => $todo->toArray()
-            ]);
         } catch (\Throwable $th) {
             return $this->json([
-                'error' => 'Error !'
+                'message' => [
+                    'text' => 'Error during creation of To-do !',
+                    'level' => 'error'
+                ]
             ]);
         }
+
+        return $this->json([
+            'todo' => $todo->toArray(),
+            'message' => [
+                'text' => 'To-do created !',
+                'level' => 'success'
+            ]
+        ]);
 
     }
 
@@ -83,5 +92,24 @@ class TodoController extends AbstractController
                 'error' => 'Error !'
             ]);
         }
+    }
+
+    #[Route('/done/{id}', name: 'app_todo_done')]
+    public function isDone(Todo $todo, Request $request)
+    {        
+        $content = json_decode($request->getContent());
+
+        $todo->setIsDone($content->isDone);
+        
+        try {
+            $this->em->flush();
+        } catch (\Throwable $th) {
+            return $this->json([
+                'error' => 'Error !'
+            ]);
+        }
+        return $this->json([
+            'success' => 'Task updated !'
+        ]);
     }
 }

@@ -12,8 +12,8 @@ import './styles/app.css';
 import './bootstrap';
 
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 import TodoContextProvider from './js/Context/TodoContext';
+import AppSnackBar from './js/Components/AppSnackBar';
 import TodoTable from './js/Components/TodoTable';
 import { createRoot } from 'react-dom/client';
 import { CssBaseline } from '@mui/material';
@@ -23,6 +23,7 @@ class App extends Component {
     return  <TodoContextProvider>
       <CssBaseline>
         <TodoTable/>
+        <AppSnackBar/>
       </CssBaseline>
     </TodoContextProvider>
   }
