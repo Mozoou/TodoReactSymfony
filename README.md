@@ -43,8 +43,6 @@ watch the results in the right.
 
 ## Tech
 
-Dillinger uses a number of open source projects to work properly:
-
 - [ReactJS] - a good js framework !
 - [Symfony] - awesome PHP framework
 - [Material UI] - An easy way to make React components
